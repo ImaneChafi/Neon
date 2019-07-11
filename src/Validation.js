@@ -3,7 +3,7 @@
  const schemaPromise = import('./validation/mei-all.rng');
 
 import Worker from './Worker.js';
-var worker, schema, statusField;
+var worker, schema, statusField, blankButton;
 
 /**
  * Add the validation information to the display and create the WebWorker
@@ -23,6 +23,14 @@ export async function init () {
     panelBlock.appendChild(pNotif);
     displayContents.appendChild(panelBlock);
     statusField = document.getElementById('validation_status');
+
+    blankButton = document.createElement('button');
+    blankButton.classList.add('button');
+    blankButton.style.marginLeft = '1em';
+    blankButton.textContent = 'Add Blank MEI File';
+    blankButton.style.display = 'none';
+    panelBlock.appendChild(blankButton);
+
     worker = new Worker();
     worker.onmessage = updateUI;
   }
@@ -39,6 +47,7 @@ export async function sendForValidation (meiData) {
   if (schema === undefined) {
     schema = await schemaPromise;
   }
+  blankButton.style.display = 'none';
   statusField.textContent = 'checking...';
   statusField.style = 'color:gray';
   worker.postMessage({
@@ -53,6 +62,7 @@ export async function sendForValidation (meiData) {
  * @param {object} message.data - The errors object produced by XML.js
  */
 function updateUI (message) {
+  blankButton.style.display = 'none';
   let errors = message.data;
   if (errors === null) {
     statusField.textContent = 'VALID';
@@ -79,10 +89,13 @@ function updateUI (message) {
 /**
  * Update the message on a blank page when there is no MEI.
  */
-export function blankPage () {
+export function blankPage (cb) {
   for (let child of statusField.children) {
     statusField.deleteChild(child);
   }
   statusField.textContent = 'No MEI'
   statusField.style = 'color:gray';
+
+  blankButton.style.display = '';
+  blankButton.onclick = cb;
 }

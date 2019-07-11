@@ -216,6 +216,26 @@ class DivaView {
   }
 
   /**
+   * Get the dimensions of a page based on the canvas.
+   * @param {string} pageURI
+   */
+  getPageDimensions (pageURI) {
+    let maxZoomLevel = this.diva.getMaxZoomLevel();
+    let index;
+    for (let [key, value] of this.indexMap.entries()) {
+      if (value === pageURI) {
+        index = key;
+        break;
+      }
+    }
+    if (index !== undefined) {
+      return this.diva.getPageDimensionsAtZoomLevel(index, maxZoomLevel);
+    } else {
+      return undefined;
+    }
+  }
+
+  /**
    * Get the name of the active page/canvas combined with the manuscript name.
    * @returns {string}
    */

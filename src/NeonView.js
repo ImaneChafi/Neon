@@ -28,7 +28,7 @@ class NeonView {
     this.view = new params.View(this, params.Display, params.manifest.image);
     this.name = params.manifest.title;
 
-    this.core = new NeonCore(params.manifest);
+    this.core = new NeonCore(this, params.manifest);
     this.display = this.view.display;
     this.info = new params.Info(this);
 

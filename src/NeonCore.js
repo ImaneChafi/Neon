@@ -10,16 +10,19 @@ const uuid = require('uuid/v4');
 class NeonCore {
   /**
    * Constructor for NeonCore
+   * @param {NeonView} neonView - The NeonView parent.
    * @param {object} manifest - The manifest to load.
    * @returns {object} A NeonCore object.
    */
-  constructor (manifest) {
+  constructor (neonView, manifest) {
     /**
      * A wrapper for the Verovio Web Worker.
      * @type {object}
      */
     this.verovioWrapper = new VerovioWrapper();
     Validation.init();
+
+    this.neonView = neonView;
 
     /**
      * Stacks of previous MEI files representing actions that can be undone for each page.
@@ -157,7 +160,7 @@ class NeonCore {
           resolve(this.neonCache.get(pageURI));
         });
       } else if (this.blankPages.includes(pageURI)) {
-        Validation.blankPage();
+        Validation.blankPage(addMEI.bind(this));
         let e = new Error('No MEI file for page ' + pageURI);
         e.name = 'missing_mei';
         reject(e);
@@ -181,11 +184,25 @@ class NeonCore {
             reject(err);
           });
         } else {
-          Validation.blankPage();
+          Validation.blankPage(addMEI.bind(this));
           this.blankPages.push(pageURI);
         }
       }
     });
+
+    function addMEI () {
+      this.blankPages.splice(this.blankPages.indexOf(pageURI), 1);
+      let pageDimensions = this.neonView.view.getPageDimensions(pageURI);
+      let mei = createBlankMEIToSize(pageDimensions.width, pageDimensions.height);
+      let annotation = {
+        id: 'urn:uuid:' + uuid(),
+        type: 'Annotation',
+        body: 'data:application/mei+xml;base64,' + window.btoa(mei),
+        target: pageURI
+      };
+      this.annotations.push(annotation);
+      this.neonView.updateForCurrentPage();
+    }
   }
 
   /**
@@ -506,6 +523,39 @@ class NeonCore {
       });
     }
   }
+}
+
+function createBlankMEIToSize (width, height) {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="4.0.0">
+    <meiHead>
+        <fileDesc>
+            <titleStmt>
+                <title>Neon Skeleton File</title>
+            </titleStmt>
+            <pubStmt/>
+        </fileDesc>
+    </meiHead>
+    <music>
+        <facsimile>
+            <surface ulx="0" uly="0" lrx="` + width + `" lry="` + height + `">
+            </surface>
+        </facsimile>
+        <body>
+            <mdiv>
+                <score>
+                    <scoreDef>
+                        <staffGrp>
+                            <staffDef n="1" lines="4" notationtype="neume" clef.line="3" clef.shape="C" />
+                        </staffGrp>
+                    </scoreDef>
+                    <section></section>
+                </score>
+            </mdiv>
+        </body>
+    </music>
+</mei>
+`;
 }
 
 export { NeonCore as default };
