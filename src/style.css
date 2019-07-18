@@ -12,6 +12,16 @@ body {
     border: none;
 }
 
+.navbar-item {
+    height: 100%;
+}
+
+button, .navbar-link {
+    border: none;
+    font-size: 1em;
+    background-color: #f5f5f5;
+}
+
 .columns {
     overflow: hidden;
     height: 94%;
@@ -24,6 +34,7 @@ body {
 }
 
 #container {
+    height: auto;
     overflow: hidden;
     padding: 0;
 }

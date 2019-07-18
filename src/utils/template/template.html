@@ -1,7 +1,7 @@
 <div class="overlay" id="loading">
   <div class="loader"></div>
 </div>
-<nav class="navbar is-light">
+<nav role="navigation" class="navbar is-light">
   <div class="navbar-brand">
     <a class="navbar-item" id="home-link">
       <p>Neon</p>
@@ -19,21 +19,21 @@
     </div>
     <div class="navbar-end">
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">Help</a>
-        <div class="navbar-dropdown is-right">
-          <a class="navbar-item" href="//github.com/DDMAL/Neon/wiki/Instructions" target="_blank">User Guide</a>
-          <a class="navbar-item" href="//github.com/DDMAL/Neon/wiki" target="_blank">Wiki</a>
-          <a class="navbar-item" href="//ddmal.music.mcgill.ca" target="_blank">DDMAL</a>
-          <a class="navbar-item" onclick="hotkeyDialog()">Hotkeys</a>
+        <button class="navbar-link">Help</button>
+        <div role="menu" class="navbar-dropdown is-right">
+          <a role="menuitem" class="navbar-item" href="//github.com/DDMAL/Neon/wiki/Instructions" target="_blank">User Guide</a>
+          <a role="menuitem" class="navbar-item" href="//github.com/DDMAL/Neon/wiki" target="_blank">Wiki</a>
+          <a role="menuitem" class="navbar-item" href="//ddmal.music.mcgill.ca" target="_blank">DDMAL</a>
+          <button role="menuitem" class="navbar-item" onclick="hotkeyDialog()">Hotkeys</button>
         </div>
       </div>
     </div>
   </div>
 </nav>
 
-<main class="columns">
+<main role="main" class="columns">
   <aside id="notification-content" style="display:none;"></aside>
-  <section class="column is-two-thirds box" id="container" style="height:getHeight()"></section>
+  <section role="application" class="column is-two-thirds box" id="container"></section>
   <section class="column is-one-third is-hidden-mobile" id="right-column">
     <div class="panel">
       <div id="display_controls"></div>

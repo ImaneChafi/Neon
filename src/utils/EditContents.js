@@ -5,7 +5,7 @@
  * @type {string}
  */
 export const navbarDropdownMenu =
-    "<div class='navbar-item has-dropdown is-hoverable'><a class='navbar-link'>File</a>" +
+    "<div class='navbar-item has-dropdown is-hoverable'><button class='navbar-link'>File</button>" +
     "<div id='navbar-dropdown-options' class='navbar-dropdown'>" +
     "<a id='save' class='navbar-item'>Save</a>" +
     "<a id='export' class='navbar-item'>Save and Export to File</a>" +
