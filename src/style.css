@@ -12,28 +12,6 @@ body {
     border: none;
 }
 
-.navbar-item {
-    height: 100%;
-}
-
-.nav-dropdown {
-    border: none;
-    font-size: 1em;
-    background-color: inherit;
-}
-
-#hotkey-button {
-    border: none;
-    font-size: 1em;
-    width: 100%;
-    background-color: inherit;
-}
-
-#hotkey-button:hover {
-    background-color: whitesmoke;
-    color: #0a0a0a;
-}
-
 .columns {
     overflow: hidden;
     height: 94%;
@@ -46,7 +24,6 @@ body {
 }
 
 #container {
-    height: auto;
     overflow: hidden;
     padding: 0;
 }
