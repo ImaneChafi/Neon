@@ -16,10 +16,22 @@ body {
     height: 100%;
 }
 
-button, .navbar-link {
+.nav-dropdown {
     border: none;
     font-size: 1em;
-    background-color: #f5f5f5;
+    background-color: inherit;
+}
+
+#hotkey-button {
+    border: none;
+    font-size: 1em;
+    width: 100%;
+    background-color: inherit;
+}
+
+#hotkey-button:hover {
+    background-color: whitesmoke;
+    color: #0a0a0a;
 }
 
 .columns {
