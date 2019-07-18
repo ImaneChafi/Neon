@@ -8,6 +8,10 @@ body {
     overflow: hidden;
 }
 
+#burgerMenu {
+    border: none;
+}
+
 .columns {
     overflow: hidden;
     height: 94%;
